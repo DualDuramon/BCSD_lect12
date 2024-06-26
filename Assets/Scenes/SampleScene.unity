@@ -249,9 +249,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1ab4ea2c0134094d82c635b2c27b37f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 5
-  lookSensitivity: 1
-  cameraRotationLimit: 45
+  walkSpeed: 10
+  runSpeed: 30
+  jumpForce: 5
+  crouchSpeed: 5
+  lookSensitivity: 3
+  cameraRotationLimit: 90
   theCamera: {fileID: 963194227}
 --- !u!136 &870645524
 CapsuleCollider:
