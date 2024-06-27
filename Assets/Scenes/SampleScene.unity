@@ -205,13 +205,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 96133309}
-  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -2.884, y: 0.384, z: 0.42599964}
-  m_LocalScale: {x: 0.09999998, y: 0.1, z: 0.09999998}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.00025, y: 0.02115, z: -0.00085}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children:
   - {fileID: 296787722}
-  m_Father: {fileID: 959657296}
-  m_RootOrder: 4
+  m_Father: {fileID: 771151949}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!199 &96133311
 ParticleSystemRenderer:
@@ -10055,6 +10055,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!4 &771151949 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3968331098899573409, guid: 95463afd8bac0d14cad8f9cbb9d1b5f6, type: 3}
+  m_PrefabInstance: {fileID: 959657295}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &870645522
 GameObject:
   m_ObjectHideFlags: 0
@@ -10089,7 +10094,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 30
-  runSpeed: 100
+  runSpeed: 60
   jumpForce: 4
   crouchSpeed: 15
   lookSensitivity: 2
@@ -10214,7 +10219,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 95463afd8bac0d14cad8f9cbb9d1b5f6, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 95463afd8bac0d14cad8f9cbb9d1b5f6, type: 3}
       propertyPath: m_LocalRotation.x
@@ -10222,7 +10227,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 95463afd8bac0d14cad8f9cbb9d1b5f6, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 95463afd8bac0d14cad8f9cbb9d1b5f6, type: 3}
       propertyPath: m_LocalRotation.z
@@ -10234,7 +10239,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 95463afd8bac0d14cad8f9cbb9d1b5f6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 95463afd8bac0d14cad8f9cbb9d1b5f6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -10343,13 +10348,13 @@ MonoBehaviour:
   fireRate: 0.2
   reloadTime: 2
   damage: 30
-  reloadBulletCount: 0
-  currentBulletCount: 0
+  reloadBulletCount: 20
+  currentBulletCount: 10
   maxBulletCount: 0
-  carryBulletCount: 0
-  retroActionForce: 0
-  retroActionFineSightForce: 0
-  FineSightOriginPos: {x: 0, y: 0, z: 0}
+  carryBulletCount: 200
+  retroActionForce: 0.3
+  retroActionFineSightForce: 0.7
+  FineSightOriginPos: {x: 0.64, y: 0.233, z: -0.585}
   anim: {fileID: 959657298}
   muzzleFlash: {fileID: 96133312}
   fireSound: {fileID: 8300000, guid: b82c5ef968b671d4ca50d5d5770c6506, type: 3}
@@ -10737,6 +10742,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentGun: {fileID: 959657299}
+  originPos: {x: 0, y: 0, z: 0}
 --- !u!82 &1711594324
 AudioSource:
   m_ObjectHideFlags: 0
@@ -11067,11 +11073,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2031721056}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 959657296}
   m_Father: {fileID: 1711594321}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}

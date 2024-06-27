@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     //그 외 컴포넌트
     private Rigidbody myRigid;
     private CapsuleCollider capsuleCollider;
+    private GunController theGunController;
 
 
     void Start()
@@ -50,6 +51,7 @@ public class PlayerController : MonoBehaviour
         applySpeed = walkSpeed;
         originPosY = theCamera.transform.localPosition.y;    //캐릭터를 내려버리면 땅에 박혀버림. 고로 카메라 내리기. 또한 그냥 position하면 world기준이 라 너무 내려가므로 localPosition해줘야함.
         applyCrouchPosY = originPosY;
+        theGunController = FindObjectOfType<GunController>();
     }
 
     void Update()
@@ -99,6 +101,8 @@ public class PlayerController : MonoBehaviour
     private void Running()
     {
         if (isCrouch) Crouch();  //앉은 상태에서 달리기 시 앉은 상태 해제
+
+        theGunController.CancleFineSight(); //달리기 시 정조준 해제
 
         isRun = true;
         applySpeed = runSpeed;
