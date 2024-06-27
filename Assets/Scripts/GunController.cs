@@ -6,21 +6,27 @@ using UnityEngine;
 public class GunController : MonoBehaviour
 {
     [SerializeField]
-    private Gun currentGun; //현재 소유하고 있는 총
+    private Gun currentGun;                 //현재 장착하고 있는 총
 
-    private float currentFireRate;  //남은 연사 쿨타임
+    private float currentFireRate;          //남은 연사 쿨타임
     private bool isReload = false;
-    private bool isFineSightMode = false;  //정조준모드 여부
+    [HideInInspector]
+    public bool isFineSightMode = false;   //정조준모드 여부
+    private Vector3 originPos;              //정조준 전 총기 원래 위치
+
+    private AudioSource audioSource;        // 효과음 컴포넌트
+
+    private RaycastHit hitInfo;             //레이 충돌 정보 저장변수
+    [SerializeField]
+    private Camera theCam;                  //사격기능을 위해 카메라를 가져옴.
 
     [SerializeField]
-    private Vector3 originPos;  //정조준 전 총기 원래 위치
-
-    private AudioSource audioSource;
+    private GameObject hitEffectPrefab;     //피격 이펙트 프리팹
 
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        
+        originPos = Vector3.zero;
     }
 
     void Update()
@@ -31,12 +37,11 @@ public class GunController : MonoBehaviour
         TryFineSight(); //정조준 시도
     }
 
-    private void GunFireRateCalc()
+    private void GunFireRateCalc() //사격 쿨타임 처리 함수
     {
         if (currentFireRate > 0)
         {
             currentFireRate -= Time.deltaTime;  //1초에 1 감소시킴.
-
         }
     }
 
@@ -64,9 +69,10 @@ public class GunController : MonoBehaviour
         }
     }
 
-    private void TryReload()
+    private void TryReload() //재장전 시도 함수
     {
-        if (Input.GetKeyDown(KeyCode.R) && !isReload && currentGun.currentBulletCount < currentGun.reloadBulletCount)
+        if (Input.GetKeyDown(KeyCode.R) && !isReload 
+            && currentGun.currentBulletCount < currentGun.reloadBulletCount)
         {
             CancleFineSight();
             StartCoroutine(ReloadCoroutine());
@@ -104,20 +110,31 @@ public class GunController : MonoBehaviour
         }
     }
 
-    private void Shoot()
+    private void Shoot() //발사 후 계산 함수
     {
         currentGun.currentBulletCount--;        //남은 총알 감소
         currentFireRate = currentGun.fireRate;  //발사 후 연사 쿨타임 초기화
         currentGun.muzzleFlash.Play();          //총구 섬광 활성화 
         PlaySE(currentGun.fireSound);           //총 발사 소리 재생
+        Hit();
 
         StopAllCoroutines();
         StartCoroutine(RetroActionCoroutine()); //반동 코루틴 실행
-        Debug.Log("총알 발사!");
-
     }
 
-    private void TryFineSight()
+    private void Hit() //피격 함수
+    {
+        //raycast는 월드좌표를 기준으로 하므로 theCam의 월드좌표position을 가져옴.
+        if (Physics.Raycast(theCam.transform.position, 
+            theCam.transform.forward, out hitInfo, currentGun.range
+            ))
+        {
+            var clone = Instantiate(hitEffectPrefab, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
+            Destroy(clone, 2f); //히트 이펙트 프리팹은 2초후에 삭제
+        }
+    }
+
+    private void TryFineSight() //조준 시도 함수
     {
         if (Input.GetButtonDown("Fire2") && !isReload)
         {
@@ -125,7 +142,7 @@ public class GunController : MonoBehaviour
         }
     }
 
-    public void CancleFineSight()
+    public void CancleFineSight() //조준 취소 함수
     {
         if (isFineSightMode)
         {
@@ -150,7 +167,7 @@ public class GunController : MonoBehaviour
         }
     }
 
-    IEnumerator FineSightActivateCoroutine()
+    IEnumerator FineSightActivateCoroutine() //정조준 활성화 코루틴
     {
         while (currentGun.transform.localPosition != currentGun.FineSightOriginPos)
         {   //currentGun이 정조준 위치로 올 때 까지 반복.
@@ -158,7 +175,7 @@ public class GunController : MonoBehaviour
             yield return null;  //1프레임 대기
         }
     }
-    IEnumerator FineSightDeActivateCoroutine()
+    IEnumerator FineSightDeActivateCoroutine() //정조준 비활성화 코루틴.
     {
         while (currentGun.transform.localPosition != originPos)
         {   //currentGun이 원래 위치로 올 때 까지 반복.
@@ -167,7 +184,7 @@ public class GunController : MonoBehaviour
         }
     }
 
-    IEnumerator RetroActionCoroutine()
+    IEnumerator RetroActionCoroutine() //반동 코루틴
     {
         //서브머신건 팔을 90도 돌렸기 떄문에 Y축이 아닌 X축으로 반동을 줌.
         Vector3 recoilBack 
