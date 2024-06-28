@@ -130,8 +130,11 @@ public class GunController : MonoBehaviour
     private void Hit() //피격 함수
     {
         //raycast는 월드좌표를 기준으로 하므로 theCam의 월드좌표position을 가져옴.
-        if (Physics.Raycast(theCam.transform.position, 
-            theCam.transform.forward, out hitInfo, currentGun.range
+        if (Physics.Raycast(theCam.transform.position, theCam.transform.forward + 
+            new Vector3(
+                Random.Range(-theCrossHair.GetAccuracy() - currentGun.accuracy, theCrossHair.GetAccuracy() + currentGun.accuracy),
+                Random.Range(-theCrossHair.GetAccuracy() - currentGun.accuracy, theCrossHair.GetAccuracy() + currentGun.accuracy),
+                0), out hitInfo, currentGun.range
             ))
         {
             var clone = Instantiate(hitEffectPrefab, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
@@ -159,6 +162,7 @@ public class GunController : MonoBehaviour
     {
         isFineSightMode = !isFineSightMode;
         currentGun.anim.SetBool("FineSightMode", isFineSightMode);
+        theCrossHair.FineSightAnimation(isFineSightMode);
 
         if (isFineSightMode)
         {
@@ -180,6 +184,7 @@ public class GunController : MonoBehaviour
             yield return null;  //1프레임 대기
         }
     }
+    
     IEnumerator FineSightDeActivateCoroutine() //정조준 비활성화 코루틴.
     {
         while (currentGun.transform.localPosition != originPos)
@@ -248,5 +253,10 @@ public class GunController : MonoBehaviour
     public Gun GetGun()
     {
         return currentGun;
+    }
+
+    public bool GetFineSightMode()
+    {
+        return isFineSightMode;
     }
 }

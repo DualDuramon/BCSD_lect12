@@ -80,6 +80,7 @@ public class PlayerController : MonoBehaviour
     private void IsGround()
     {
         isGround = Physics.Raycast(transform.position, Vector3.down, capsuleCollider.bounds.extents.y + 0.1f);
+        theCrossHair.RunningAnimation(!isGround);   //땅에 닿지 않을때 크로스헤어 달리기때와 같이 벌어짐
     }
 
     private void TryJump()
@@ -188,7 +189,7 @@ public class PlayerController : MonoBehaviour
 
     private void MoveCheck()
     {
-        if (!isRun && !isCrouch)
+        if (!isRun && !isCrouch && isGround)
         {
             if (Vector3.Distance(lastPos, transform.position) >= 0.01f)
             {

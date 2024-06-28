@@ -10515,6 +10515,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 1851363848}
   go_CrossHairHud: {fileID: 1851363846}
+  theGunController: {fileID: 1711594323}
 --- !u!4 &771151949 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3968331098899573409, guid: 95463afd8bac0d14cad8f9cbb9d1b5f6, type: 3}
@@ -10946,7 +10947,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunName: SubMachineGun1
   range: 100
-  accuracy: 0
+  accuracy: 0.02
   fireRate: 0.12
   reloadTime: 2
   damage: 30
