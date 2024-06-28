@@ -11,7 +11,7 @@ public class GunController : MonoBehaviour
     private float currentFireRate;          //남은 연사 쿨타임
     private bool isReload = false;
     [HideInInspector]
-    public bool isFineSightMode = false;   //정조준모드 여부
+    public bool isFineSightMode = false;    //정조준모드 여부
     private Vector3 originPos;              //정조준 전 총기 원래 위치
 
     private AudioSource audioSource;        // 효과음 컴포넌트
@@ -23,9 +23,13 @@ public class GunController : MonoBehaviour
     [SerializeField]
     private GameObject hitEffectPrefab;     //피격 이펙트 프리팹
 
+    //그외 컴포넌트
+    private CrossHair theCrossHair;
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        theCrossHair = FindObjectOfType<CrossHair>();
         originPos = Vector3.zero;
     }
 
@@ -112,6 +116,7 @@ public class GunController : MonoBehaviour
 
     private void Shoot() //발사 후 계산 함수
     {
+        theCrossHair.FireAnimation();           //크로스헤어 애니메이션 실행
         currentGun.currentBulletCount--;        //남은 총알 감소
         currentFireRate = currentGun.fireRate;  //발사 후 연사 쿨타임 초기화
         currentGun.muzzleFlash.Play();          //총구 섬광 활성화 
