@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GunController : MonoBehaviour
 {
-    public static bool isActivate = true;   //활성화 여부
+    public static bool isActivate = false;   //활성화 여부
 
     [SerializeField]
     private Gun currentGun;                 //현재 장착하고 있는 총
@@ -33,9 +33,6 @@ public class GunController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         theCrossHair = FindObjectOfType<CrossHair>();
         originPos = Vector3.zero;
-
-        WeaponManager.currentWeapon = currentGun.GetComponent<Transform>();
-        WeaponManager.currentWeaponAnim = currentGun.anim;
     }
 
     void Update()
