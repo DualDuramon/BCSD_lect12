@@ -2,9 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HandController : CloseWeaponController
+public class PickAxeController : CloseWeaponController
 {
-    public static bool isActivate = false;   //활성화 여부
+    public static bool isActivate = true;   //활성화 여부
+
+    void Start()
+    {
+        WeaponManager.currentWeapon = currentCloseWeapon.GetComponent<Transform>();
+        WeaponManager.currentWeaponAnim = currentCloseWeapon.anim;
+    }
 
     void Update()
     {
