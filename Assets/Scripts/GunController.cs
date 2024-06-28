@@ -287,8 +287,8 @@ public class GunController : MonoBehaviour
         WeaponManager.currentWeapon = currentGun.GetComponent<Transform>();
         WeaponManager.currentWeaponAnim = currentGun.anim;
 
-        currentGun.transform.localPosition = Vector3.zero; //혹시모를 gun 위치 초기화
-        currentGun.gameObject.SetActive(true);  //해당 gun 오브젝트 활성화
+        currentGun.transform.localPosition = Vector3.zero;  //혹시모를 gun 위치 초기화
+        currentGun.gameObject.SetActive(true);              //해당 gun 오브젝트 활성화
         isActivate = true;
     }
 }

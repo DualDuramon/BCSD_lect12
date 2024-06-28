@@ -52,7 +52,7 @@ public class WeaponManager : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                //무기교체 실행(맨손)
+                //무기교체 실행(서브머신건)
                 StartCoroutine(ChangeWeaponCoroutine("GUN", "SubMachineGun1"));
             }
         }   
@@ -62,7 +62,7 @@ public class WeaponManager : MonoBehaviour
     public IEnumerator ChangeWeaponCoroutine(string type, string name)
     {
         isChangeWeapon = true;
-        currentWeaponAnim.SetTrigger("Weapon_Out");
+        currentWeaponAnim.SetTrigger("WeaponOut");
         yield return new WaitForSeconds(changeWeaponDelayTime);
 
         CanclePreWeaponAction();
