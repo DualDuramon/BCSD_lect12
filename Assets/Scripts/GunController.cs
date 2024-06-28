@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class GunController : MonoBehaviour
 {
+    public static bool isActivate = true;   //활성화 여부
+
     [SerializeField]
     private Gun currentGun;                 //현재 장착하고 있는 총
 
@@ -31,14 +33,20 @@ public class GunController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         theCrossHair = FindObjectOfType<CrossHair>();
         originPos = Vector3.zero;
+
+        WeaponManager.currentWeapon = currentGun.GetComponent<Transform>();
+        WeaponManager.currentWeaponAnim = currentGun.anim;
     }
 
     void Update()
     {
-        GunFireRateCalc();
-        TryFire();
-        TryReload();
-        TryFineSight(); //정조준 시도
+        if (isActivate)
+        {
+            GunFireRateCalc();
+            TryFire();
+            TryReload();
+            TryFineSight(); //정조준 시도
+        }
     }
 
     private void GunFireRateCalc() //사격 쿨타임 처리 함수
@@ -80,6 +88,15 @@ public class GunController : MonoBehaviour
         {
             CancleFineSight();
             StartCoroutine(ReloadCoroutine());
+        }
+    }
+
+    public void CancleReload() //재장전 취소 함수
+    {
+        if (isReload)
+        {
+            StopAllCoroutines();
+            isReload = false;
         }
     }
 
@@ -258,5 +275,20 @@ public class GunController : MonoBehaviour
     public bool GetFineSightMode()
     {
         return isFineSightMode;
+    }
+
+    public void GunChange(Gun gun)
+    {
+        if (WeaponManager.currentWeapon != null)
+        {
+            WeaponManager.currentWeapon.gameObject.SetActive(false);
+        }
+        currentGun = gun;
+        WeaponManager.currentWeapon = currentGun.GetComponent<Transform>();
+        WeaponManager.currentWeaponAnim = currentGun.anim;
+
+        currentGun.transform.localPosition = Vector3.zero; //혹시모를 gun 위치 초기화
+        currentGun.gameObject.SetActive(true);  //해당 gun 오브젝트 활성화
+        isActivate = true;
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class CrossHair : MonoBehaviour
 {
     [SerializeField]
-    private Animator anim;
+    private Animator anim;      //크로스헤어의 애니메이션
 
     private float gunAccuracy;  //크로스헤어 상태에 따른 총의 정확도.
 
@@ -15,19 +15,19 @@ public class CrossHair : MonoBehaviour
     [SerializeField]
     private GunController theGunController;
     
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void WalkingAnimation(bool flag)
     {
+        WeaponManager.currentWeaponAnim.SetBool("Walk", flag);
         anim.SetBool("Walking", flag);
     }
 
     public void RunningAnimation(bool flag)
+    {
+        WeaponManager.currentWeaponAnim.SetBool("Run", flag);
+        anim.SetBool("Running", flag);
+    }
+
+    public void JumpingAnimation(bool flag)
     {
         anim.SetBool("Running", flag);
     }
