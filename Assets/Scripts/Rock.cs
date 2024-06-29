@@ -23,17 +23,13 @@ public class Rock : MonoBehaviour
 
     //소리 관련 변수
     [SerializeField]
-    private AudioSource audioSource;
+    private string strikeSound; //바위 채굴 사운드
     [SerializeField]
-    private AudioClip effectSound;      //채굴 소리
-    [SerializeField]
-    private AudioClip effectSound2;     //파괴 소리
+    private string destroySound; //바위 파괴 사운드
 
     public void Mining()
     {
-        audioSource.clip = effectSound; //채굴소리 재생
-        audioSource.Play();
-
+        SoundManager.instance.PlaySE(strikeSound);
         var clone = Instantiate(go_EffectPrefab, col.bounds.center, Quaternion.identity);
         Destroy(clone, destroyTime);
 
@@ -46,9 +42,7 @@ public class Rock : MonoBehaviour
 
     private void Destruction()
     {
-        audioSource.clip = effectSound2; //파괴소리 재생
-        audioSource.Play();
-
+        SoundManager.instance.PlaySE(destroySound);
         col.enabled = false;
         Destroy(go_Rock);
 
