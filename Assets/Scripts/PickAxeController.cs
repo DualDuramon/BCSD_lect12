@@ -23,6 +23,10 @@ public class PickAxeController : CloseWeaponController
         {
             if (CheckObject())
             {
+                if (hitInfo.transform.tag == "Rock")
+                {
+                    hitInfo.transform.GetComponent<Rock>().Mining();
+                }
                 isSwing = false; //적중한게 있으면 더이상 피격판정 활성화x
                 Debug.Log(hitInfo.transform.name);
             }
