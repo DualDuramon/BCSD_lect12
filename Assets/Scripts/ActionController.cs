@@ -13,9 +13,11 @@ public class ActionController : MonoBehaviour
     [SerializeField]
     private LayerMask layerMask;   //특정 아이템 레이어에만 반응하도록 레이어 마스크 설정.
 
+    //필요한 컴포넌트
     [SerializeField]
     private Text actionText;        //행동을 보여주는 텍스트
-
+    [SerializeField]
+    private Inventory theInventory;     //인벤토리
 
     private void Update()
     {
@@ -39,6 +41,7 @@ public class ActionController : MonoBehaviour
             if (hitInfo.transform != null)
             {
                 Debug.Log(hitInfo.transform.GetComponent<ItemPickUp>().item.itemName + "를 획득하였습니다.");
+                theInventory.AcquireItem(hitInfo.transform.GetComponent<ItemPickUp>().item); //획득 아이템 인벤토리 대입
                 Destroy(hitInfo.transform.gameObject);
                 InfoDisappear();
             }
