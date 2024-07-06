@@ -248,6 +248,18 @@ public class StatusController : MonoBehaviour
         }
     }
 
+    public void IncreaseSp(int amount)  //스태미너 회복(증가) 함수
+    {
+        if (currentSp + amount < sp)
+        {
+            currentSp += amount;
+        }
+        else
+        {
+            currentSp = sp;
+        }
+    }
+
     public void DecreaseStamina(int amount) //스태미너 감소 함수
     {
         spUsed = true;
@@ -261,7 +273,7 @@ public class StatusController : MonoBehaviour
         }
     }
 
-    public int GetCurrentSP()
+    public int GetCurrentSP()   //현재 스태미너 반환 함수
     {
         return currentSp;
     }

@@ -17,11 +17,11 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
     [SerializeField]
     private GameObject go_CountImage;
 
-    private WeaponManager theWeaponManager;
-
+    private ItemEffectDataBase theItemEffectDataBase;
+    
     private void Start()
     {
-        theWeaponManager = FindObjectOfType<WeaponManager>();
+        theItemEffectDataBase = FindObjectOfType<ItemEffectDataBase>();
     }
     
     private void SetColor(float alpha)      //아이템의 색상(특히 알파값) 조절 함수.
@@ -34,7 +34,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
     public void AddItem(Item addItem, int count = 1)    //아이템 획득 함수.
     {
         item = addItem;
-        itemCount = count;
+        itemCount = count; 
         itemImage.sprite = item.itemImage;      //슬롯의 이미지를 획득한 아이템의 이미지로
 
         if (item.itemType != Item.ItemType.Equipment)
@@ -79,17 +79,10 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
         {
             if (item != null)
             {
-                if(item.itemType == Item.ItemType.Equipment)
-                {
-                    //장착
-                    StartCoroutine(theWeaponManager.ChangeWeaponCoroutine(item.weaponType, item.itemName));
-                }
-                else
-                {
-                    //사용
-                    Debug.Log(item.itemName + "을 사용했습니다.");
+                //아이템 사용
+                theItemEffectDataBase.useItem(item);
+                if(item.itemType == Item.ItemType.Used)
                     SetSlotCount(-1);
-                }
             }
         }
     }
