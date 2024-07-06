@@ -30,8 +30,8 @@ public class StatusController : MonoBehaviour
 
     //배고픔
     [SerializeField]
-    private int hungry;
-    private int currentHungry;
+    private int hungry;             //기본 배고픔 수치
+    private int currentHungry;      //현재 배고픔 수치
 
     //배고픔 감소 타이머
     [SerializeField]
@@ -154,18 +154,115 @@ public class StatusController : MonoBehaviour
         images_Gauge[SATISFY].fillAmount = (float)currentSatisfy / satisfy;
     }
 
+    public void IncreaseHp(int amount)  //Hp 회복(증가) 함수
+    {
+        if (currentHp + amount < hp) {
+            currentHp += amount;
+        }
+        else {
+            currentHp = hp;
+        }
+    }
+
+    public void DecreaseHp(int amount)  //Hp 감소 함수
+    {
+        if(currentDp > 0) {
+            DecreaseDp(amount);
+            return;
+        }
+
+        currentHp -= amount;
+
+        if (currentHp <= 0) {
+            Debug.Log("캐릭터의 Hp가 0이 되었습니다");
+        }
+    }
+
+    public void IncreaseDp(int amount)  //Dp 회복(증가) 함수
+    {
+        if (currentDp + amount < dp)
+        {
+            currentDp += amount;
+        }
+        else
+        {
+            currentDp = dp;
+        }
+    }
+
+    public void DecreaseDp(int amount)  //Dp 감소 함수
+    {
+        currentDp -= amount;
+
+        if (currentDp <= 0)
+        {
+            Debug.Log("캐릭터의 방어력이 0이 되었습니다");
+        }
+    }
+
+    public void IncreaseHungry(int amount)  //배고픔 회복(증가) 함수
+    {
+        if (currentHungry + amount < hungry)
+        {
+            currentHungry += amount;
+        }
+        else
+        {
+            currentHungry = hungry;
+        }
+    }
+
+    public void DecreaseHungry(int amount)  //배고픔 감소 함수
+    {
+        if(currentHungry - amount < 0)
+        {
+            currentHungry = 0;
+        }
+        else
+        {
+            currentHungry -= amount;
+        }
+    }
+
+    public void IncreaseThirsty(int amount)  //목마름 회복(증가) 함수
+    {
+        if (currentThirsty + amount < thirsty)
+        {
+            currentThirsty += amount;
+        }
+        else
+        {
+            currentThirsty = hungry;
+        }
+    }
+
+    public void DecreaseThirsty(int amount)  //목마름 감소 함수
+    {
+        if (currentThirsty - amount < 0)
+        {
+            currentThirsty = 0;
+        }
+        else
+        {
+            currentThirsty -= amount;
+        }
+    }
+
     public void DecreaseStamina(int amount) //스태미너 감소 함수
     {
         spUsed = true;
         currentSpRecoveryTime = 0;
 
-        if (currentSp - amount > 0)
-        {
+        if (currentSp - amount > 0) {
             currentSp -= amount;
         }
-        else
-        {
+        else {
             currentSp = 0;
         }
+    }
+
+    public int GetCurrentSP()
+    {
+        return currentSp;
     }
 }
