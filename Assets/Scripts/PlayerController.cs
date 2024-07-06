@@ -74,8 +74,11 @@ public class PlayerController : MonoBehaviour
         TryRun();
         TryCrouch();
         Move();
-        CameraRotation();       //카메라 상하회전
-        CharacterRotation();    //캐릭터,카메라 좌우 회전.
+        if (!Inventory.inventoryActivated)
+        {
+            CameraRotation();       //카메라 상하회전
+            CharacterRotation();    //캐릭터,카메라 좌우 회전.
+        }
     }
 
     //점프 관련 함수들
