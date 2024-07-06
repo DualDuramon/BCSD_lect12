@@ -5,7 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 
-public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
+public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, 
+                    IEndDragHandler, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public Item item;       // 획득한 아이템
     public int itemCount;   // 획득한 아이템의 개수
@@ -73,6 +74,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
         go_CountImage.SetActive(false);
     }
 
+    //클릭했을때 작동
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Right)
@@ -87,6 +89,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
         }
     }
 
+    //드래그 앤 드롭 관련 인터페이스 함수
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (item != null)
@@ -132,5 +135,17 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
             DragSlot.instance.dragSlot.AddItem(tempItem, tempItemCount);
         else
             DragSlot.instance.dragSlot.ClearSlot();
+    }
+
+    //마우스가 슬롯에 들어가거나 나올때 작동
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (item != null)
+            theItemEffectDataBase.ShowToolTip(item, transform.position);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        theItemEffectDataBase.HideToolTip();
     }
 }
