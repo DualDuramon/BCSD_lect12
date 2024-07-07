@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour
     private CapsuleCollider capsuleCollider;
     private GunController theGunController;
     private CrossHair theCrossHair;
+    private StatusController theStatusController;
 
     void Start()
     {
@@ -55,7 +56,8 @@ public class PlayerController : MonoBehaviour
         myRigid = GetComponent<Rigidbody>();
         theGunController = FindObjectOfType<GunController>();
         theCrossHair = FindObjectOfType<CrossHair>();
-        
+        theStatusController = FindObjectOfType<StatusController>();
+
         applySpeed = walkSpeed;
         originPosY = theCamera.transform.localPosition.y;    //캐릭터를 내려버리면 땅에 박혀버림. 고로 카메라 내리기. 또한 그냥 position하면 world기준이 라 너무 내려가므로 localPosition해줘야함.
         applyCrouchPosY = originPosY;
@@ -72,8 +74,11 @@ public class PlayerController : MonoBehaviour
         TryRun();
         TryCrouch();
         Move();
-        CameraRotation();       //카메라 상하회전
-        CharacterRotation();    //캐릭터,카메라 좌우 회전.
+        if (!Inventory.inventoryActivated)
+        {
+            CameraRotation();       //카메라 상하회전
+            CharacterRotation();    //캐릭터,카메라 좌우 회전.
+        }
     }
 
     //점프 관련 함수들
@@ -85,7 +90,7 @@ public class PlayerController : MonoBehaviour
 
     private void TryJump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && isGround)
+        if (Input.GetKeyDown(KeyCode.Space) && isGround && theStatusController.GetCurrentSP() > 0)
         {
             Jump();
         }
@@ -94,17 +99,19 @@ public class PlayerController : MonoBehaviour
     private void Jump()
     {
         if (isCrouch) Crouch();                         //앉은 상태서 점프 시 앉은상태 해제
+        theStatusController.DecreaseStamina(100);
         myRigid.velocity = transform.up * jumpForce;    //순간적으로 속도를 바꿈. 이걸로 점프 구현
+
     }
 
     //달리기 관련 함수들
     private void TryRun()
     {
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && theStatusController.GetCurrentSP() > 0)
         {
             Running();
         }
-        if (Input.GetKeyUp(KeyCode.LeftShift))
+        if (Input.GetKeyUp(KeyCode.LeftShift) || theStatusController.GetCurrentSP() <= 0)
         {
             RunningCancle();
         }
@@ -118,6 +125,7 @@ public class PlayerController : MonoBehaviour
 
         isRun = true;
         theCrossHair.RunningAnimation(isRun);
+        theStatusController.DecreaseStamina(10);
         applySpeed = runSpeed;
     }
 
