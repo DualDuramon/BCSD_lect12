@@ -150,7 +150,7 @@ public class Pig : MonoBehaviour
 
     }
 
-    private void Run(Vector3 targetPos) //targetPos 반대방향으로 달리게하는 함수
+    public void Run(Vector3 targetPos) //targetPos 반대방향으로 달리게하는 함수
     {
         direction = Quaternion.LookRotation(transform.position - targetPos).eulerAngles;    //반대방향 바라보기
 
