@@ -12101,6 +12101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 15
   runSpeed: 40
+  applySpeed: 0
   jumpForce: 4
   crouchSpeed: 10
   lookSensitivity: 2
@@ -15709,7 +15710,7 @@ GameObject:
   - component: {fileID: 1639857092}
   m_Layer: 0
   m_Name: Pig
-  m_TagString: NPC
+  m_TagString: WeakAnimal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15728,11 +15729,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animalName: Pig
   hp: 2
-  walkSpeed: 1
-  runSpeed: 4
+  walkSpeed: 2
+  runSpeed: 5
   walkTime: 5
   waitTime: 4
   runTime: 5
+  turnningSpeed: 0.5
   anim: {fileID: 238962761}
   rigid: {fileID: 1639857089}
   boxCol: {fileID: 1639857088}
