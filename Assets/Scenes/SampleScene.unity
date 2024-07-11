@@ -15736,12 +15736,12 @@ MonoBehaviour:
   anim: {fileID: 238962761}
   rigid: {fileID: 1639857089}
   boxCol: {fileID: 1639857088}
-  pigNormalSounds:
+  normalSounds:
   - {fileID: 8300000, guid: 1873ec34447f6304b9b130136cda8ebe, type: 3}
   - {fileID: 8300000, guid: 4af110207e7a79e4dbea843cc1a4661b, type: 3}
   - {fileID: 8300000, guid: d1fe163ca162e414eae0383d7af2ab87, type: 3}
-  pigHurtSounds: {fileID: 8300000, guid: 8bebb26a606f6d640840f07d30a08348, type: 3}
-  pigDeadSounds: {fileID: 8300000, guid: 2b505cbf7949f094a956e953068da26e, type: 3}
+  hurtSounds: {fileID: 8300000, guid: 8bebb26a606f6d640840f07d30a08348, type: 3}
+  deadSounds: {fileID: 8300000, guid: 2b505cbf7949f094a956e953068da26e, type: 3}
 --- !u!65 &1639857088
 BoxCollider:
   m_ObjectHideFlags: 0
