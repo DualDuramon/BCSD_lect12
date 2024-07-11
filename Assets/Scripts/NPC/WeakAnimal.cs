@@ -7,12 +7,13 @@ public class WeakAnimal : Animal
 
     public void Run(Vector3 targetPos) //targetPos 반대방향으로 달리게하는 함수
     {
-        direction = Quaternion.LookRotation(transform.position - targetPos).eulerAngles;    //반대방향 바라보기
+        destination 
+            = new Vector3(transform.position.x - targetPos.x, 0f, transform.position.z - targetPos.z).normalized;
 
         currentTime = runTime;
         isWalking = false;
         isRunning = true;
-        applySpeed = runSpeed;
+        nav.speed = runSpeed;
         anim.SetBool("Running", isRunning);
     }
 
