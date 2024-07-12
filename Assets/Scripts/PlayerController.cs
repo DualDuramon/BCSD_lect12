@@ -70,14 +70,15 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
-        IsGround();
-        TryJump();
-        TryRun();
-        TryCrouch();
-        Move();
-        if (!Inventory.inventoryActivated)
+        if (GameManager.canPlayerMove)
         {
-            CameraRotation();       //카메라 상하회전
+            IsGround();
+            TryJump();
+            TryRun();
+            TryCrouch();
+            Move();
+                
+            CameraRotation();       //카메라 상하회전    
             CharacterRotation();    //캐릭터,카메라 좌우 회전.
         }
     }
