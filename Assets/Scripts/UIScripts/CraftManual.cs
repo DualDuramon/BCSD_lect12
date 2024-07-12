@@ -28,7 +28,7 @@ public class CraftManual : MonoBehaviour
     //Raycast 필요 변수
     private RaycastHit hitInfo;
     
-    [SerializeField] private LayerMask playerMask;
+    [SerializeField] private LayerMask layerMask;
     [SerializeField] private float range;
 
     public void SlotClick(int slotNum)     //Slot UI 버튼 클릭시 미리보기 생성 함수
@@ -66,7 +66,8 @@ public class CraftManual : MonoBehaviour
 
     private void Build()    //건축물 생성 함수
     {
-        if (isPreviewActivated)     //미리보기가 활성화 되있을때만 생성
+        if (isPreviewActivated 
+            && go_Preview.GetComponent<PreviewObject>().IsBuildable())     //미리보기가 활성화 및 건설 가능한지를 따짐
         {
             Instantiate(go_Prefab, hitInfo.point, Quaternion.identity);
             Destroy(go_Preview);
@@ -79,7 +80,7 @@ public class CraftManual : MonoBehaviour
 
     private void PreviewPositionUpdate()    //미리보기 프리펩 위치 업데이트 함수 : 플레이어 크로스헤어 따라가게
     {
-        if (Physics.Raycast(tf_Player.position, tf_Player.forward, out hitInfo, range, playerMask))
+        if (Physics.Raycast(tf_Player.position, tf_Player.forward, out hitInfo, range, layerMask))
         {
             if (hitInfo.transform != null)
             {
