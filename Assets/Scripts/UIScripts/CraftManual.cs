@@ -36,6 +36,7 @@ public class CraftManual : MonoBehaviour
         go_Preview = Instantiate(craft_Fire[slotNum].go_PreviewPrefab, tf_Player.position + tf_Player.forward, Quaternion.identity);
         go_Prefab = craft_Fire[slotNum].go_Prefab;
         isPreviewActivated = true;
+        GameManager.isOpenCraftManual = false;
         go_BaseUI.SetActive(false);
     }
 
@@ -118,7 +119,7 @@ public class CraftManual : MonoBehaviour
     private void OpenWindow()   //BaseUI 활성화 함수
     {
         isActivated = true;
-
+        GameManager.isOpenCraftManual = true;
         go_BaseUI.SetActive(true);
 
     }
@@ -126,6 +127,7 @@ public class CraftManual : MonoBehaviour
     private void CloseWindow()  //BaseUI 비활성화 함수
     {
         isActivated = false;
+        GameManager.isOpenCraftManual = false;
         go_BaseUI.SetActive(false);
     }
     
