@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private float walkSpeed;
     [SerializeField]
     private float runSpeed;
+    [SerializeField]
     private float applySpeed;   //현재 적용되는 스피드.
 
     [SerializeField]

@@ -19,6 +19,9 @@ public class GunController : MonoBehaviour
     private AudioSource audioSource;        // 효과음 컴포넌트
 
     private RaycastHit hitInfo;             //레이 충돌 정보 저장변수
+    [SerializeField] 
+    private LayerMask layerMask;
+    
     [SerializeField]
     private Camera theCam;                  //사격기능을 위해 카메라를 가져옴.
 
@@ -144,11 +147,11 @@ public class GunController : MonoBehaviour
     private void Hit() //피격 함수
     {
         //raycast는 월드좌표를 기준으로 하므로 theCam의 월드좌표position을 가져옴.
-        if (Physics.Raycast(theCam.transform.position, theCam.transform.forward + 
+        if (Physics.Raycast(theCam.transform.position, theCam.transform.forward +
             new Vector3(
                 Random.Range(-theCrossHair.GetAccuracy() - currentGun.accuracy, theCrossHair.GetAccuracy() + currentGun.accuracy),
                 Random.Range(-theCrossHair.GetAccuracy() - currentGun.accuracy, theCrossHair.GetAccuracy() + currentGun.accuracy),
-                0), out hitInfo, currentGun.range
+                0), out hitInfo, currentGun.range, layerMask
             ))
         {
             var clone = Instantiate(hitEffectPrefab, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
