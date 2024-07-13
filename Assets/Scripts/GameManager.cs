@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     public static bool isOpenInventory = false;     //인벤토리 활성화 여부
     public static bool isOpenCraftManual = false;   //건축메뉴창 활성화 여부
 
+    public static bool isNight = false;     //밤낮 여부
+    public static bool isWater = false;     //물속 여부
 
     // Start is called before the first frame update
     void Start()
