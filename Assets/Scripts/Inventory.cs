@@ -14,8 +14,10 @@ public class Inventory : MonoBehaviour
 
     //슬롯들
     private Slot[] slots;
-    
-    
+
+    //그외
+    [SerializeField] private Item[] items;  //아이템 목록 배열
+
     void Start()
     {
         slots = go_SlotsParent.GetComponentsInChildren<Slot>();
@@ -83,4 +85,21 @@ public class Inventory : MonoBehaviour
             }
         }
     }
+
+    public Slot[] GetSlots() //인벤토리 슬롯 반환 함수 
+    {
+        return slots;
+    }
+
+    public void LoadToInventory(int arrayNum, string itemName, int itemNum)
+    {
+        for (int i = 0; i < items.Length; i++)
+        {
+            if (items[i].itemName == itemName)
+            {
+                slots[arrayNum].AddItem(items[i], itemNum);
+            }
+        }
+    }
+
 }

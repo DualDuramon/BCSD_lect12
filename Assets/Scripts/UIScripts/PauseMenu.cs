@@ -5,7 +5,8 @@ using UnityEngine;
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject go_BaseUI;
-    
+    [SerializeField] private SaveNLoad theSaveNLoad;
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.P))
@@ -40,11 +41,13 @@ public class PauseMenu : MonoBehaviour
     public void ClickSave()
     {
         Debug.Log("저장");
+        theSaveNLoad.SaveData();
     }
 
     public void ClickLoad()
     {
         Debug.Log("로드");
+        theSaveNLoad.LoadData();
     }
 
     public void ClickExit()

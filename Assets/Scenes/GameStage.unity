@@ -11979,6 +11979,7 @@ GameObject:
   m_Component:
   - component: {fileID: 505192206}
   - component: {fileID: 505192205}
+  - component: {fileID: 505192207}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -12012,6 +12013,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &505192207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 505192204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bbe375bac4702b47b9e03b88e0525f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &505454754
 GameObject:
   m_ObjectHideFlags: 0
@@ -18147,6 +18160,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   go_Inventory_Base: {fileID: 1469524471}
   go_SlotsParent: {fileID: 1789436545}
+  items:
+  - {fileID: 11400000, guid: 97274d1a0e6ece14e9389c32616f614c, type: 2}
+  - {fileID: 11400000, guid: 23c8a74413798e64f88883e8c0d1865f, type: 2}
+  - {fileID: 11400000, guid: 2e3b539dd1a5dbd46bfbb4bff027403a, type: 2}
 --- !u!224 &1616698767
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18217,6 +18234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   go_BaseUI: {fileID: 1866171964}
+  theSaveNLoad: {fileID: 505192207}
 --- !u!1 &1639857086
 GameObject:
   m_ObjectHideFlags: 0
