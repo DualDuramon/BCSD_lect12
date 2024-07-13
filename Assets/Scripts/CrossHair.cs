@@ -17,36 +17,54 @@ public class CrossHair : MonoBehaviour
     
     public void WalkingAnimation(bool flag)
     {
-        WeaponManager.currentWeaponAnim.SetBool("Walk", flag);
-        anim.SetBool("Walking", flag);
+        if (!GameManager.isWater)
+        {
+            WeaponManager.currentWeaponAnim.SetBool("Walk", flag);
+            anim.SetBool("Walking", flag);
+        }
     }
 
     public void RunningAnimation(bool flag)
     {
-        WeaponManager.currentWeaponAnim.SetBool("Run", flag);
-        anim.SetBool("Running", flag);
+        if (!GameManager.isWater)
+        {
+            WeaponManager.currentWeaponAnim.SetBool("Run", flag);
+            anim.SetBool("Running", flag);
+        }
     }
 
     public void JumpingAnimation(bool flag)
     {
-        anim.SetBool("Running", flag);
+        if (!GameManager.isWater)
+        {
+            anim.SetBool("Running", flag);
+        }
     }
 
     public void CrouchingAnimation(bool flag)
     {
-        anim.SetBool("Crouching", flag);
+        if (!GameManager.isWater)
+        {
+            anim.SetBool("Crouching", flag);
+        }
     }
 
     public void FineSightAnimation(bool flag)
     {
-        anim.SetBool("FineSight", flag);
+        if (!GameManager.isWater)
+        {
+            anim.SetBool("FineSight", flag);
+        }
     }
 
     public void FireAnimation()
     {
-        if (anim.GetBool("Walking")) anim.SetTrigger("WalkFire");
-        else if (anim.GetBool("Crouching")) anim.SetTrigger("CrouchFire");
-        else anim.SetTrigger("IdleFire");
+        if (!GameManager.isWater)
+        {
+            if (anim.GetBool("Walking")) anim.SetTrigger("WalkFire");
+            else if (anim.GetBool("Crouching")) anim.SetTrigger("CrouchFire");
+            else anim.SetTrigger("IdleFire");
+        }
     }
 
     public float GetAccuracy()

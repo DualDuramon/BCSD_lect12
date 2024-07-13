@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Transactions;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Water : MonoBehaviour
 {
@@ -25,17 +26,31 @@ public class Water : MonoBehaviour
     [SerializeField] private string sound_WaterIn;
     [SerializeField] private string Sound_WaterBreath;
 
-    [SerializeField] private float breathTime;
-    private float currentBreathTime = 0f;
+    //호흡 관련
+    [SerializeField] private float breathTime;  //최대 호흡 타이머
+    private float currentBreathTime = 0f;       //현재 호흡 타이머
+    [SerializeField] private float totalOxygen; //최대 호흡량
+    private float currentOxygen;                //현재 남은 호흡량
+    private float temp;
+
+    [SerializeField] private GameObject go_BaseUI;
+    [SerializeField] private Text text_totalOxygen;
+    [SerializeField] private Text text_currentOxygen;
+    [SerializeField] private Image image_OxygenGuage;
+
+    //필요 컴포넌트
+    private StatusController thePlayerStat;
 
     // Start is called before the first frame update
     void Start()
     {
         originColor = RenderSettings.fogColor;
         originFogDensity = RenderSettings.fogDensity;
-
         originDrag = 0;
 
+        thePlayerStat = FindObjectOfType<StatusController>();
+        currentOxygen = totalOxygen;
+        text_totalOxygen.text = totalOxygen.ToString();
     }
 
     // Update is called once per frame
@@ -50,7 +65,7 @@ public class Water : MonoBehaviour
                 SoundManager.instance.PlaySE(Sound_WaterBreath);
                 currentBreathTime = 0f;
             }
-
+            DecreaseOxygen();
         }
     }
 
@@ -75,6 +90,7 @@ public class Water : MonoBehaviour
     {
         SoundManager.instance.PlaySE(sound_WaterIn);
 
+        go_BaseUI.SetActive(true);
         GameManager.isWater = true;
         player.transform.GetComponent<Rigidbody>().drag = waterDrag;
 
@@ -94,11 +110,14 @@ public class Water : MonoBehaviour
     {
         if (GameManager.isWater)
         {
+            go_BaseUI.SetActive(false);
             SoundManager.instance.PlaySE(sound_WaterOut);
 
+            currentOxygen = totalOxygen;
             GameManager.isWater = false;
             player.transform.GetComponent<Rigidbody>().drag = originDrag;
-
+            player.transform.GetComponent<PlayerController>().ResetSpeed();
+                
             if (!GameManager.isNight)
             {
                 RenderSettings.fogColor = originColor;
@@ -108,6 +127,28 @@ public class Water : MonoBehaviour
             {
                 RenderSettings.fogColor = originNightColor;
                 RenderSettings.fogDensity = originNightFogDensity;
+            }
+        }
+        
+    }
+
+    private void DecreaseOxygen()
+    {
+        if (GameManager.isWater)
+        {
+            currentOxygen -= Time.deltaTime;
+            text_currentOxygen.text = Mathf.RoundToInt(currentOxygen).ToString();
+            image_OxygenGuage.fillAmount = currentOxygen / totalOxygen;
+
+            if(currentOxygen <= 0)
+            {
+                temp += Time.deltaTime;
+                if (temp >= 1)
+                {
+                    thePlayerStat.DecreaseHp(1);
+                    temp = 0;
+                }
+                currentOxygen = 0;
             }
         }
     }
