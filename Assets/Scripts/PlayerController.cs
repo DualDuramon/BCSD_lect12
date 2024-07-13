@@ -8,16 +8,17 @@ using UnityEngine.Scripting.APIUpdating;
 
 public class PlayerController : MonoBehaviour
 {
-    //스피드, 점프 관련 변수
-    [SerializeField]
-    private float walkSpeed;
-    [SerializeField]
-    private float runSpeed;
-    [SerializeField]
-    private float applySpeed;   //현재 적용되는 스피드.
-
+    //스피드, 점프, 수영 관련 변수
+    [SerializeField] private float walkSpeed;
+    [SerializeField] private float runSpeed;
+    [SerializeField] private float applySpeed;   //현재 적용되는 스피드.
+    
     [SerializeField]
     private float jumpForce;
+
+    [SerializeField] private float swimSpeed;
+    [SerializeField] private float swimFastSpeed;
+    [SerializeField] private float upSwimSpeed;
 
     private bool isWalk = false;    //걷기 여부
     private bool isRun = false;    //달리기 여부
@@ -27,8 +28,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 lastPos;    //전 프레임의 플레이어 위치
 
     //앉기 관련 변수
-    [SerializeField]
-    private float crouchSpeed;
+    [SerializeField] private float crouchSpeed;
     private float crouchPosY;   //앉을 때의 높이 변수
     private float originPosY;   //앉기 전 원래 높이 변수
     private float applyCrouchPosY;  //현재 앉은 높이 변수
@@ -36,13 +36,10 @@ public class PlayerController : MonoBehaviour
 
 
     //카메라 관련 변수
-    [SerializeField]
-    private float lookSensitivity;                  //민감도
-    [SerializeField]
-    private float cameraRotationLimit;              //카메라 회전 제한 각도.
+    [SerializeField] private float lookSensitivity;                  //민감도
+    [SerializeField] private float cameraRotationLimit;              //카메라 회전 제한 각도.
     private float currentCameraRotationX = 0.0f;    //현제 카메라 x축 각도.
-    [SerializeField]
-    private Camera theCamera;  //카메라 컴포넌트
+    [SerializeField] private Camera theCamera;  //카메라 컴포넌트
 
     //그 외 컴포넌트
     private Rigidbody myRigid;
@@ -68,16 +65,23 @@ public class PlayerController : MonoBehaviour
     {
         MoveCheck();    //프레임 업데이트율때문에 lastPos가 매우 빠르게 호출됨.
     }
+
     void Update()
     {
-        IsGround();
-        TryJump();
-        TryRun();
-        TryCrouch();
-        Move();
-        if (!Inventory.inventoryActivated)
+        if (GameManager.canPlayerMove)
         {
-            CameraRotation();       //카메라 상하회전
+            WaterCheck();
+            IsGround();
+            TryJump();
+
+            if (!GameManager.isWater)
+            {
+                TryRun();
+            }
+            TryCrouch();
+            Move();
+                
+            CameraRotation();       //카메라 상하회전    
             CharacterRotation();    //캐릭터,카메라 좌우 회전.
         }
     }
@@ -91,9 +95,13 @@ public class PlayerController : MonoBehaviour
 
     private void TryJump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && isGround && theStatusController.GetCurrentSP() > 0)
+        if (Input.GetKeyDown(KeyCode.Space) && isGround && theStatusController.GetCurrentSP() > 0 && !GameManager.isWater)
         {
             Jump();
+        }
+        else if (Input.GetKey(KeyCode.Space) && GameManager.isWater)
+        {
+            UpSwim();
         }
     }
 
@@ -211,6 +219,33 @@ public class PlayerController : MonoBehaviour
             theCrossHair.WalkingAnimation(isWalk);
             lastPos = transform.position;
         }
+    }
+
+    public void ResetSpeed()
+    {
+        applySpeed = walkSpeed;
+    }
+
+    //수영 관련 함수
+    private void WaterCheck()
+    {
+        if (GameManager.isWater)
+        {
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                applySpeed = swimFastSpeed;
+            }
+            else
+            {
+                applySpeed = swimSpeed;
+            }
+        }
+        
+    }
+
+    private void UpSwim()
+    {
+        myRigid.velocity = transform.up * upSwimSpeed;
     }
 
     //카메라 관련 함수

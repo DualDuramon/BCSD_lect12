@@ -138,4 +138,20 @@ public class WeaponManager : MonoBehaviour
             thePickAxeController.CloseWeaponChange(pickAxeDictionary[name]);
         }
     }
+
+    public IEnumerator WeaponInCoroutine()  //무기 집어넣기 코루틴
+    {
+        isChangeWeapon = true;
+        currentWeaponAnim.SetTrigger("WeaponOut");
+
+        yield return new WaitForSeconds(changeWeaponDelayTime);
+        
+        currentWeapon.gameObject.SetActive(false);
+    }
+
+    public void WeaponOut()
+    {
+        isChangeWeapon = false;
+        currentWeapon.gameObject.SetActive(true);
+    }
 }
