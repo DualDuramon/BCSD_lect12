@@ -11,7 +11,8 @@ public class GameManager : MonoBehaviour
     public static bool isNight = false;     //밤낮 여부
     public static bool isWater = false;     //물속 여부
 
-    
+    public static bool isPause = false;     //일시정지
+
     private WeaponManager theWM;    //웨폰매니저
     private bool flag = false;      //웨폰매니저의 코루틴 실행 여부
 
@@ -27,7 +28,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isOpenInventory || isOpenCraftManual)
+        if (isOpenInventory || isOpenCraftManual || isPause)
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
